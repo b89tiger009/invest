@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新手投資屬性與抗風險能力評估問卷</title>
+    <style>
+        :root {
+            --primary-color: #2b6cb0;
+            --secondary-color: #319795;
+            --background-color: #f7fafc;
+            --card-background: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            background-color: #edf2f7;
+            padding: 10px 15px;
+            border-left: 5px solid var(--primary-color);
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        /* 當選項被選中時的樣式 */
+        .option-label.selected {
+            background-color: #ebf8ff;
+            border-color: #4299e1;
+            font-weight: 500;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(43, 108, 176, 0.2);
+        }
+
+        .btn-submit:hover {
+            background-color: #2b6cb0;
+            opacity: 0.9;
+        }
+
+        #result-box {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 12px;
+            background-color: #f0fff4;
+            border: 2px solid #38a169;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #276749;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .result-score {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .result-score span {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .result-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #c6f6d5;
+        }
+
+        .warning-text {
+            margin-top: 15px;
+            color: #9b2c2c;
+            background-color: #fff5f5;
+            padding: 12px;
+            border-left: 4px solid #e53e3e;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 投資屬性與抗風險能力評估</h1>
+    <p class="subtitle">專為投資新手設計，只需 2 分鐘，找出最適合您的金融商品配置！</p>
+
+    <form id="quiz-form">
+        <!-- 第一部分 -->
+        <div class="section-title">第一部分：心理抗壓度（你「心理上」能承受多少波動？）</div>
+
+        <div class="question-card">
+            <div class="question-title">Q1. 如果你今天把 10 萬元投入市場，下個月因為市場景氣不好變成了 8 萬元（帳面虧損 20%），你的第一反應通常是？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="1" required> 每天焦慮失眠，無法專心工作，只想立刻賣掉換成現金。</label>
+                <label class="option-label"><input type="radio" name="q1" value="3"> 有點心痛和緊張，會密切關注新聞，猶豫要不要停損。</label>
+                <label class="option-label"><input type="radio" name="q1" value="5"> 覺得這是市場正常波動，只要公司沒倒，會選擇放著不管或逢低加碼。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q2. 對於「投資」這件事，你最期待、也最看重的結果是什麼？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="1" required> 絕對不能賠到本金，有穩定的微薄利息就好。</label>
+                <label class="option-label"><input type="radio" name="q2" value="3"> 資產能穩步增長，至少要打贏通貨膨脹，偶爾小賠一點可以接受。</label>
+                <label class="option-label"><input type="radio" name="q2" value="5"> 追求資產在幾年內有翻倍或大幅成長的機會，為此承擔高波動也無所謂。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q3. 過去的投資或理財經驗中，你發現自己對「不確定性」的看法是？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="1" required> 只要帳面數字開始變動，我就會感到不安，喜歡一切都在掌控中。</label>
+                <label class="option-label"><input type="radio" name="q3" value="3"> 可以接受中等程度的波動，只要長期趨勢是向上的就好。</label>
+                <label class="option-label"><input type="radio" name="q3" value="5"> 波動越大越興奮，因為那代表賺大錢的機會越多。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q4. 當你聽到身邊朋友投資某個高風險商品大賺一筆時，你的直覺想法是？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="1" required> 那太危險了，那種錢不屬於我，我還是乖乖存錢就好。</label>
+                <label class="option-label"><input type="radio" name="q4" value="3"> 有點羨慕，但我會先去研究背後的風險，再決定要不要用小額資金試試看。</label>
+                <label class="option-label"><input type="radio" name="q4" value="5"> 怕錯過行情（FOMO），想立刻跟單，投入資金大衝一把。</label>
+            </div>
+        </div>
+
+        <!-- 第二部分 -->
+        <div class="section-title">第二部分：財務現實狀況（你「財務上」能承載多少風險？）</div>
+
+        <div class="question-card">
+            <div class="question-title">Q5. 這筆即將用來投資的資金，預計在多久之內「絕對不會」被用到（如結婚、買房、大筆開銷）？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="1" required> 1 年以內（隨時可能需要提領出來）。</label>
+                <label class="option-label"><input type="radio" name="q5" value="3"> 1 ~ 5 年之間（屬於中短期資金規劃）。</label>
+                <label class="option-label"><input type="radio" name="q5" value="5"> 5 年以上，甚至到退休前都不會動用（屬於長期閒錢）。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q6. 除了打算投資的這筆錢之外，你目前手邊的「緊急預備金（可支撐生活 3~6 個月現金）」準備好了嗎？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="1" required> 完全沒有準備，這筆投資資金就是我全部的積蓄了。</label>
+                <label class="option-label"><input type="radio" name="q6" value="3"> 有準備，但金額不太夠，如果遇到突發狀況可能需要變賣部分投資資產。</label>
+                <label class="option-label"><input type="radio" name="q6" value="5"> 準備得非常充足，就算投資的錢全部套牢，也完全不影響我的日常生活。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q7. 你目前主要的收入來源與穩定度如何？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="1" required> 收入不固定（如接案、自由職業、待業中），或是每個月入不敷出。</label>
+                <label class="option-label"><input type="radio" name="q7" value="3"> 有穩定的工作與月薪，每月扣除必要開銷後，還有一點固定閒錢。</label>
+                <label class="option-label"><input type="radio" name="q7" value="5"> 收入豐厚且非常穩定，或是擁有多元被動收入，儲蓄率很高。</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-title">Q8. 目前你個人的負債狀況如何（不含可由收入輕鬆覆蓋的長期房貸）？</div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="1" required> 有高利的信用卡循環利息、或信貸壓力，每月還款吃力。</label>
+                <label class="option-label"><input type="radio" name="q8" value="3"> 有一些學貸或車貸，但都在可控範圍內，按時還款沒問題。</label>
+                <label class="option-label"><input type="radio" name="q8" value="5"> 幾乎零負債，沒有任何財務利息負擔。</label>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="submit" class="btn-submit">送出評估，查看結果</button>
+        </div>
+    </form>
+
+    <!-- 結果顯示區域 -->
+    <div id="result-box">
+        <div class="result-title">🎯 您的投資屬性分析結果</div>
+        <div class="result-score">您的總得分為：<span id="score-output">0</span> 分</div>
+        <div class="result-content" id="result-text">
+            <!-- 結果由 JavaScript 動態生成 -->
+        </div>
+        <div class="warning-text">
+            ⚠️ <strong>新手特別提醒：</strong>如果您的總分在 35 分以下，代表您的風險承受力尚未達到專業操盤手等級，<strong>請絕對不要碰高槓桿的衍生性商品（如期貨、選擇權、權證）</strong>，否則新手極易在短時間內受重傷。
+        </div>
+    </div>
+</div>
+
+<script>
+    // 監聽點擊選項時的視覺效果
+    document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', function() {
+            // 先清除同一個問題群組內所有選項的 selected 樣式
+            const name = this.getAttribute('name');
+            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                radio.parentElement.classList.remove('selected');
+            });
+            // 為當前點選的選項加上 selected 樣式
+            if (this.checked) {
+                this.parentElement.classList.add('selected');
+            }
+        });
+    });
+
+    // 表單送出計算分數
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let totalScore = 0;
+        const formData = new FormData(this);
+        
+        // 累加分數
+        for (let value of formData.values()) {
+            totalScore += parseInt(value);
+        }
+
+        // 顯示分數
+        document.getElementById('score-output').innerText = totalScore;
+
+        // 根據分數判定結果
+        let resultHTML = '';
+        if (totalScore >= 8 && totalScore <= 15) {
+            resultHTML = `
+                <p><strong>您的類型：🛡️ 極度保守型</strong></p>
+                <p><strong>核心特質：</strong>安全至上，無法承受本金縮水，且投資資金多為中短期需求。</p>
+                <p><strong>適合的金融商品：</strong>銀行定存、高信用評等公債（如美國國債）、貨幣市場基金。</p>
+            `;
+        } else if (totalScore >= 16 && totalScore <= 26) {
+            resultHTML = `
+                <p><strong>您的類型：⚖️ 穩健防守型</strong></p>
+                <p><strong>核心特質：</strong>追求高於定存的收益，可接受市場極小的波動，看重穩定配息與資產安全。</p>
+                <p><strong>適合的金融商品：</strong>投資等級公司債、<strong>高股息 ETF</strong>、REITs（房地產投資信託）。</p>
+            `;
+        } else if (totalScore >= 27 && totalScore <= 35) {
+            resultHTML = `
+                <p><strong>您的類型：📈 積極成長型</strong></p>
+                <p><strong>核心特質：</strong>具備長期閒錢，能忍受市場上下震盪，追求資產長期翻倍成長。</p>
+                <p><strong>適合的金融商品：</strong><strong>市值型 ETF（大盤型）</strong>、大型績優股（藍籌股）、全球權益類共同基金。</p>
+            `;
+        } else if (totalScore >= 36 && totalScore <= 40) {
+            resultHTML = `
+                <p><strong>您的類型：⚡ 衝刺冒險型</strong></p>
+                <p><strong>核心特質：</strong>財務底氣足、心臟大，追求超額報酬，能與市場高波動共存。</p>
+                <p><strong>適合的金融商品：</strong>中小型成長股、產業型基金、外匯交易、海外個股。</p>
+            `;
+        }
+
+        // 渲染結果並滾動到可見區域
+        document.getElementById('result-text').innerHTML = resultHTML;
+        const resultBox = document.getElementById('result-box');
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
