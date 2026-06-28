@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新手投資屬性與抗風險能力評估問卷</title>
     <script>
-        // 嚴格檢查 HTTP 來源網頁 (Referrer) 驗證機制
+        // 【安全防護】嚴格檢查 HTTP 來源網頁 (Referrer) 驗證機制
         (function() {
             var allowedReferrer = "https://b89tiger009.github.io/Portal_web_encV2/";
             var currentReferrer = document.referrer;
             
-            // 如果來源網頁不完全符合允許的網址，則強制中斷載入並顯示白屏示警
+            // 如果來源網頁不完全符合允許的網址，則強制中斷載入並直接跳轉回門戶網站
             if (!currentReferrer || currentReferrer.indexOf(allowedReferrer) !== 0) {
                 alert("錯誤：未授權的存取來源！本網頁僅允許從指定門戶網站開啟。\\n\\nUnauthorized Access.");
-                // 重新導向回允許的門戶首頁，或引導至空白頁
                 window.location.href = allowedReferrer;
-                // 強制停止後續所有 DOM 的解析
                 throw new Error("Access Denied: Invalid Referrer Source.");
             }
         })();
